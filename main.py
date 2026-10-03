@@ -1,6 +1,7 @@
 import json
 import datetime
 
+
 class ExpenseTracker:
     def __init__(self, filename="expenses.json"):
         self.filename = filename
@@ -25,7 +26,7 @@ class ExpenseTracker:
             "category": category,
             "date": str(datetime.date.today())
         })
-        self.save()   
+        self.save()
 
     def totals_by_category(self):
         totals = {}
@@ -38,6 +39,7 @@ class ExpenseTracker:
         self.expenses.pop(index)
         self.save()
 
+
 def get_amount():
     while True:
         try:
@@ -48,7 +50,6 @@ def get_amount():
             return amount
         except ValueError:
             print("Please enter a valid number.")
-
 
 
 def main():
@@ -71,15 +72,33 @@ def main():
             if not tracker.expenses:
                 print("No expenses yet.")
             for i, e in enumerate(tracker.expenses, start=1):
-                print(i, e["name"], e["amount"], e["category"], e["date"])
+                print(i, e["name"], e["amount"], e["category"], e.get("date", ""))
         elif choice == "3":
-            pass   # TODO: Step 8
+            if not tracker.expenses:
+                print("No expenses yet.")
+            for category, total in tracker.totals_by_category().items():
+                print(f"{category}: {total}")
         elif choice == "4":
-            pass   # TODO: Step 8
+            if not tracker.expenses:
+                print("No expenses yet.")
+            else:
+                for i, e in enumerate(tracker.expenses, start=1):
+                    print(i, e["name"], e["amount"])
+                try:
+                    number = int(input("Delete which number? "))
+                    if 1 <= number <= len(tracker.expenses):
+                        tracker.delete(number - 1)
+                        print("Deleted.")
+                    else:
+                        print("Invalid number.")
+                except ValueError:
+                    print("Please enter a number.")
         elif choice == "5":
             print("Goodbye!")
             break
         else:
             print("Invalid choice.")
 
-main()
+
+if __name__ == "__main__":
+    main()

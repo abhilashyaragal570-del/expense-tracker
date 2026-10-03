@@ -1,3 +1,5 @@
-   venv/
-   __pycache__/
-   expenses.json
+venv/
+__pycache__/
+expenses.json
+ai_expenses.json
+.env
