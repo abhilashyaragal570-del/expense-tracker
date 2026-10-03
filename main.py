@@ -23,7 +23,7 @@ class ExpenseTracker:
         self.expenses.append({
             "name": name,
             "amount": amount,
-            "category": category,
+            "category": category.strip().title(),
             "date": str(datetime.date.today())
         })
         self.save()
